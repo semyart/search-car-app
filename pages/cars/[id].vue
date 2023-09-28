@@ -10,7 +10,6 @@ const carStore = useCarStore();
 const inputValue = ref<string>("");
 const carData = ref<CarItem[]>([]);
 const showModal = ref<boolean>(false);
-// const isListHoryzontal = ref<boolean>(false);
 const pending = ref<boolean>(true);
 
 onMounted(async () => {
@@ -55,12 +54,38 @@ function showCar(car: Car) {
             Автомобили отсутствуют.
         </div>
         <div v-else>
-            <button 
-                class="search-page__list-view-btn" 
-                @click="carStore.toggleListType()"
-            >
-                Включить режим отображения {{ carStore.isListHoryzontal ? "Плиточный" : "Горизонтальный" }}
-            </button>
+            <div 
+                class="search-page__list-mode-wrapper"                 
+            >   
+                <button
+                    class="search-page__list-mode-btn"    
+                    :class="{'disabled': !carStore.isListHoryzontal}"
+                    @click="carStore.toggleListType()"
+                >
+                    <icon-base                                            
+                        iconColor="#fff" 
+                        width="18" 
+                        height="18" 
+                        icon-name="card-mode"
+                    >
+                        <icon-card-mode />
+                    </icon-base>
+                </button>
+                <button
+                    class="search-page__list-mode-btn"    
+                    :class="{'disabled': carStore.isListHoryzontal}"
+                    @click="carStore.toggleListType()"
+                >
+                    <icon-base
+                        iconColor="#fff" 
+                        width="18" 
+                        height="18" 
+                        icon-name="card-mode"
+                    >
+                        <icon-horyzontal-mode />
+                    </icon-base>
+                </button>
+            </div>
 
             <ul 
                 class="search-page__car-list" 
@@ -79,19 +104,33 @@ function showCar(car: Car) {
             </ul>
         </div>
 
-        <div class="search-page__pagination">
+        <div class="search-page__pagination">            
             <NuxtLink 
                 v-if="Number(route.params.id) > 1" 
                 :to="`/cars/${Number(route.params.id) - 1}`"
             >
-                Предыдущая страница
+                <icon-base 
+                    iconColor="#007bff" 
+                    width="36" 
+                    height="36" 
+                    icon-name="arrow-left"
+                >
+                    <icon-arrow-left />
+                </icon-base>
             </NuxtLink>
 
             <NuxtLink 
                 :to="`/cars/${Number(route.params.id) + 1}`" 
                 class="search-page__next-page"
             >
-                Следующая страница
+                <icon-base 
+                    iconColor="#007bff" 
+                    width="36" 
+                    height="36" 
+                    icon-name="arrow-right"
+                >
+                    <icon-arrow-right />
+                </icon-base>
             </NuxtLink>
         </div>
     </div>
@@ -100,10 +139,11 @@ function showCar(car: Car) {
       title="Автомобиль"
       @confirm="showModal = false"
     >
-        <span class="items__text">Марка авто: {{ carStore.car?.carMake }} </span>
-        <span class="items__text">Модель: {{ carStore.car?.carModel }} </span>
-        <span class="items__text">Тип авто: {{ carStore.car?.carType }} </span>
-        <span class="items__text">Год: {{ carStore.car?.carYear }} </span>
+        <img class="app-modal__img" src="@/assets/img/auto.jpg" alt="">
+        <span class="app-modal__text">Марка авто: {{ carStore.car?.carMake }} </span>
+        <span class="app-modal__text">Модель: {{ carStore.car?.carModel }} </span>
+        <span class="app-modal__text">Тип авто: {{ carStore.car?.carType }} </span>
+        <span class="app-modal__text">Год: {{ carStore.car?.carYear }} </span>
     </app-modal>
 </template>
 
@@ -129,9 +169,20 @@ function showCar(car: Car) {
         margin-left: auto;
     }
 
-    &__list-view-btn {
-        display: block;
-        margin: 0 0 20px auto;
+    &__list-mode-wrapper {
+        display: flex;
+        justify-content: end;
+        gap: 10px;
+        margin-bottom: 20px;
+        background: none;
+        border: none;
+    }
+
+    &__list-mode-btn {
+        padding: 5px;
+        background-color: $blue;
+        border: none;
+        cursor: pointer;
     }
 
     &__empty {

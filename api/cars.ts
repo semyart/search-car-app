@@ -3,7 +3,7 @@ export const getCarData = (pageNumber: number) => {
         method: 'GET',
         url: 'https://car-data.p.rapidapi.com/cars',
         params: {
-          limit: '16',
+          limit: '15',
           page: `${pageNumber}`
         },
         headers: {

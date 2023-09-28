@@ -20,34 +20,48 @@
       <h1 class="app-modal__title">{{ title }}</h1>
       <slot />
       <button class="app-modal__button" @click="emit('confirm')">
-        Confirm
+        Закрыть
       </button>
     </VueFinalModal>
   </template>
 
-  <style lang="scss">
-  .app-modal {
+<style lang="scss">
+.app-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    background: $white;
+    border-radius: 0.5rem;
+  }
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-        padding: 1rem;
-        background: #fff;
-        border-radius: 0.5rem;
-    }
+  &__title {
+    font-size: 1.375rem;
+  }
 
-    &__title {
-        font-size: 1.375rem;
-    }
+  &__button {
+    margin: 0.25rem 0 0 auto;
+    padding: 5px 10px;
+    width: 40%;
+    border: none;
+    border-radius: 4px;
+    background-color: $blue;
+    font-size: 16px;
+    color: $white;
+    cursor: pointer;
+  }
 
-    &__button {
-        margin: 0.25rem 0 0 auto;
-        padding: 0 8px;
-        border: 1px solid;
-        border-radius: 0.5rem;
-    }
-  }   
+  &__text {
+    margin-bottom: 10px;
+  }
+
+  &__img {
+    max-height: 400px;
+    margin-bottom: 20px;
+  }
+}
 </style>
